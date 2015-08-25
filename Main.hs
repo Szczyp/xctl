@@ -63,13 +63,15 @@ opts = subparser
        $ cmd "mute" toggleMute
        <> cmd "bat" battery
        <> cmd "date" date
-       <> subcmd "vol" incDecDesc (subparser
-                                   $ cmd "inc" raiseVolume
-                                   <> cmd "dec" lowerVolume)
-       <> subcmd "bl" incDecDesc (subparser
-                                  $ cmd "inc" increaseBacklight
-                                  <> cmd "dec" decreaseBacklight)
-  where incDecDesc = progDesc "inc | dec"
+       <> subcmd "vol" desc (subparser
+                             $ cmd "inc" raiseVolume
+                             <> cmd "dec" lowerVolume
+                             <> cmd "show" volume)
+       <> subcmd "bl" desc (subparser
+                            $ cmd "inc" increaseBacklight
+                            <> cmd "dec" decreaseBacklight
+                            <> cmd "show" backlight)
+  where desc = progDesc "inc | dec | show"
         cmd c a = command c (info (pure $ stdout a) idm)
         subcmd c d p = command c (info p d)
 
